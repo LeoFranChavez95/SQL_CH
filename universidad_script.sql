@@ -57,4 +57,15 @@ CREATE TABLE carrera (
     plan_de_estudio VARCHAR(10) NOT NULL,
     PRIMARY KEY (codigo_carrera)
 )
+
+ -- CREACION DE INDICES
+
+ -- INDICE ESTUDIANTE 
+CREATE UNIQUE INDEX apellido_estudiante
+ON estudiante (apellido);
+
+-- INDICE DOCENTE
+CREATE UNIQUE INDEX apellido_docente
+ON docente (apellido) ;
+
  
