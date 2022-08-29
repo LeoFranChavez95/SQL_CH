@@ -1,4 +1,6 @@
-/*CREATE SCHEMA universidad;*/
+-- AUTOR : LEONEL FRANKLIN CHAVEZ OLIVARES
+-- CREACION DE BASE
+CREATE SCHEMA universidad;
 USE universidad;
 
 
