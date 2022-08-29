@@ -1,7 +1,7 @@
 -- AUTOR : LEONEL FRANKLIN CHAVEZ OLIVARES
 -- CREACION DE BASE
-CREATE SCHEMA universidadPrueba2;
-USE universidadPrueba2;
+CREATE SCHEMA universidad;
+USE universidad;
 
 
 -- CREACION DE TABLAS
