@@ -7,10 +7,10 @@ USE universidad;
 -- CREACION DE TABLAS
 
 -- TABLA CARRERA
+-- Esta tabla es la que contiene el numero de plan de estudio y en el atributo de carrera describe el nombre de la carrera
 CREATE TABLE carrera (
     codigo_carrera INT UNSIGNED NOT NULL,
     carrera VARCHAR(30) NOT NULL,
-    plan_de_estudio VARCHAR(10) NOT NULL,
     PRIMARY KEY (codigo_carrera)
 );
 
@@ -45,7 +45,7 @@ CREATE TABLE estudiante (
 
 -- TABLA CURSO
 CREATE TABLE curso (
-    codigo_de_curso INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    codigo_de_curso INT UNSIGNED NOT NULL ,
     legajo_docente INT UNSIGNED NOT NULL,
     codigo_de_catedra INT UNSIGNED NOT NULL,
     fecha_de_inicio DATE DEFAULT NULL,
@@ -54,17 +54,28 @@ CREATE TABLE curso (
     CONSTRAINT curso_catedra FOREIGN KEY (codigo_de_catedra) REFERENCES catedra (codigo_de_catedra)	
 );
 
+-- Esta tabla es la que va a relacionar los N alumnos con los M estudiantes (Relacion muchos a muchos)
+-- tiene una clave compuesta , las claves primarias de las tablas de estudiante y curso
+
+CREATE TABLE curso_estudiante(
+	codigo_de_curso INT UNSIGNED NOT NULL,
+    legajo_estudiante INT UNSIGNED NOT NULL,
+    CONSTRAINT codigo_de_curso FOREIGN KEY (codigo_de_curso) REFERENCES curso (codigo_de_curso),
+	CONSTRAINT legajo_de_estudiante FOREIGN KEY (legajo_estudiante) REFERENCES estudiante (legajo_estudiante),
+	PRIMARY KEY (codigo_de_curso,legajo_estudiante)
+);
+
 -- TABLA EXAMEN
 CREATE TABLE examen (
-    numero_examen INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    numero_examen INT UNSIGNED NOT NULL,
     legajo_estudiante INT UNSIGNED NOT NULL,
     codigo_de_curso INT UNSIGNED NOT NULL,
     fecha DATE NOT NULL,
     descripcion VARCHAR(50) DEFAULT NULL,
     nota INT UNSIGNED NOT NULL, 
-    PRIMARY KEY (numero_examen),
     CONSTRAINT examen_estudiante FOREIGN KEY (legajo_estudiante) REFERENCES estudiante (legajo_estudiante),
-    CONSTRAINT examen_curso FOREIGN KEY (codigo_de_curso) REFERENCES curso (codigo_de_curso)
+    CONSTRAINT examen_curso FOREIGN KEY (codigo_de_curso) REFERENCES curso (codigo_de_curso),
+	PRIMARY KEY (legajo_estudiante,codigo_de_curso,numero_examen)
 );
 
  -- CREACION DE INDICES
