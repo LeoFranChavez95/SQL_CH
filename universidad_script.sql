@@ -45,7 +45,7 @@ CREATE TABLE estudiante (
 
 -- TABLA CURSO
 CREATE TABLE curso (
-    codigo_de_curso INT UNSIGNED NOT NULL ,
+    codigo_de_curso INT UNSIGNED NOT NULL AUTO_INCREMENT ,
     legajo_docente INT UNSIGNED NOT NULL,
     codigo_de_catedra INT UNSIGNED NOT NULL,
     fecha_de_inicio DATE DEFAULT NULL,
@@ -87,5 +87,3 @@ ON estudiante (apellido);
 -- INDICE DOCENTE
 CREATE UNIQUE INDEX apellido_docente
 ON docente (apellido) ;
-
- 
