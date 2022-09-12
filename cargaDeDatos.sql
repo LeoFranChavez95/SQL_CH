@@ -1,4 +1,7 @@
 USE universidad;
+
+-- Insercion de datos de docentes
+-- (Numero de legajo (PK) Autoincrementable,nombre,apellido,mail)
 INSERT INTO docente VALUES 
 (null,"Oscar","Bruno","oscarQuemero@gmail.com"),
 (null,"Silvina","Ortega","silviOrtega98@hotmail.com"),
@@ -15,6 +18,8 @@ INSERT INTO docente VALUES
 (null,"Susana","Granado Peralta","susanaGPeralta@gmail.com"),
 (null,"Alfredo","Santamartina","alfredSantamartina@hotmail.com");
 
+-- Insercion de datos de catedra
+-- (Numero de catedra (PK) autoincrementable,legajo docente(FK) (jefe de catedra),nombre de la materia)
 INSERT INTO catedra VALUES 
 (null,14,"Analisis Matematico 1"),
 (null,14,"Analisis Matematico 2"),
@@ -23,6 +28,8 @@ INSERT INTO catedra VALUES
 (null,11,"Matematica Superior"),
 (null,10,"Algebra");
 
+-- Insercion de datos de carrera
+-- (Codigo de carrera (PK),nombre de la carrera)
 INSERT INTO carrera VALUES
 (01,"Ingenieria en Sistemas"),
 (02,"Ingenieria Quimica "),
@@ -32,6 +39,8 @@ INSERT INTO carrera VALUES
 (06,"Ingenieria Electronica"),
 (07,"Ingenieria Textil");
 
+-- Insercion de datos de alumnos
+-- (Legajo estudiante (PK) Autoincrementable,Nombre,Apellido,email,codigo de carrera (FK)(PK de la tabla carrera))
 INSERT INTO estudiante VALUES 
 -- (null,"Gabriel Damian","Montenegro","gabiPereyra@gmail.com",1),
 (null,"Juan Ezequiel","Brea","juanBrea@yahoo.com",1),
@@ -117,21 +126,25 @@ INSERT INTO estudiante VALUES
 (null,"Maria","Rodrigues","mariR@hotmail.com",2),
 (null,"Noelia","Chavez","noeChavez95@gmail.com",3);
 
+-- Insercion de datos de cursos
+-- (Codigo de curso(PK) Autoincrementable,Legajo docente(FK),codigo de catedra(Fk),fecha de inicio)
 INSERT INTO curso VALUES
-(null,3,1,"2022-03-01"), -- AM1
-(null,5,1,"2022-07-04"), -- AM1
-(null,8,1,"2022-04-01"), -- AM1
-(null,6,2,"2022-03-01"), -- AM2
-(null,9,2,"2022-07-01"), -- AM2
-(null,11,3,"2022-03-01"), -- MD
-(null,12,3,"2022-07-01"), -- MD
-(null,2,4,"2022-03-01"), -- SYO
-(null,4,4,"2022-03-01"), -- SYO
-(null,12,5,"2022-03-01"), -- MS
-(null,13,5,"2022-07-07"), -- MS
-(null,7,6,"2022-03-15"), -- AGA
-(null,10,6,"2022-07-17"); -- AGA
+(null,3,1,"2022-03-01"), -- ANALISIS MATEMATICO 1
+(null,5,1,"2022-07-04"), -- ANALISIS MATEMATICO 1
+(null,8,1,"2022-04-01"), -- ANALISIS MATEMATICO 1
+(null,6,2,"2022-03-01"), -- ANALISIS MATEMATICO 2
+(null,9,2,"2022-07-01"), -- ANALISIS MATEMATICO 2
+(null,11,3,"2022-03-01"), -- MATEMATICA DISCRETA
+(null,12,3,"2022-07-01"), -- MATEMATICA DISCRETA
+(null,2,4,"2022-03-01"), -- SISTEMA Y ORGANIZACIONES
+(null,4,4,"2022-03-01"), -- SISTEMA Y ORGANIZACIONES
+(null,12,5,"2022-03-01"), -- MATEMATICA SUPERIOR
+(null,13,5,"2022-07-07"), -- MATEMATICA SUPERIOR
+(null,7,6,"2022-03-15"), -- ALGEBRA
+(null,10,6,"2022-07-17"); -- ALGEBRA
 
+-- Insercion de datos de curso-estudiante/ tabla que me permite relacion N cursos con N estudiantes
+-- (Numero de curso,Legajo estudiante) Clave Primaria Compuesta 
 INSERT INTO curso_estudiante VALUES 
 (1,1),
 (1,2),
@@ -410,6 +423,10 @@ INSERT INTO curso_estudiante VALUES
 (13,76),
 (13,77);
 
+-- Insercion de datos Examenes 
+-- (Numero de examen(PK)(1 = primer parcial/2 = segundo parcial),Legajo estudiante(FK),Codigo de curso(FK),
+-- descripcion del examen,nota)
+-- Clave primaria compuesta
 INSERT INTO examen VALUES
 (1,1,1,"2022-06-17","Primer Parcial",8),
 (2,1,1,"2022-08-17","Segundo Parcial",9),
@@ -1054,6 +1071,9 @@ INSERT INTO examen VALUES
 (1,77,13,"2022-07-15","Primer Parcial",1),
 (2,77,13,"2022-11-29","Segundo Parcial",5);
 
+
+-- CONSULTAS DE PRUEBA
+-- Consulta que me devuelve los alumnos por catedra y sus nota
 SELECT catedra,nombre,apellido,descripcion,nota
 FROM examen AS e JOIN estudiante AS es
 ON es.legajo_estudiante = e.legajo_estudiante
@@ -1063,19 +1083,7 @@ JOIN catedra AS ca
 ON ca.codigo_de_catedra = c.codigo_de_catedra
 ORDER BY catedra;
 
-
-
-
-
-SELECT e.legajo_estudiante,e.nombre,e.apellido,ca.catedra,ce.codigo_de_curso,c.fecha_de_inicio
-FROM estudiante AS e JOIN curso_estudiante AS ce
-ON e.legajo_estudiante = ce.legajo_estudiante
-JOIN curso AS c
-ON c.codigo_de_curso = ce.codigo_de_curso
-JOIN catedra AS ca
-ON ca.codigo_de_catedra = c.codigo_de_catedra
-ORDER BY ce.legajo_estudiante,e.codigo_carrera;
-
+-- Consulta que me devuelve a los estudiante de la carrera de Ingenieria en Sistemas
 SELECT *
 FROM estudiante AS e JOIN carrera AS c
 ON e.codigo_carrera = c.codigo_carrera
